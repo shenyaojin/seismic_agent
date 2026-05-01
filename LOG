@@ -1,0 +1,62 @@
+╭─   ~/Documents/2026/CSCI576/seismic_agent on   main !1 ?2 ················································································································································  base at  11:56:49 AM
+╰─❯ python3 main.py                                                        
+/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/main.py:38: LangSmithBetaWarning: Function wrap_gemini is in beta.
+  client = wrappers.wrap_gemini(
+2026-05-01 11:56:56,466 [INFO] Agent subscribed to DATA_READY
+2026-05-01 11:56:56,466 [INFO] Agent subscribed to ANALYSIS_COMPLETE
+2026-05-01 11:56:56,466 [INFO] Agent subscribed to ANALYSIS_COMPLETE
+--- Starting Mission: Analyze the Marmousi synthetic data for porosity prediction. ---
+
+2026-05-01 11:56:56,466 [INFO] Processing mission request: Analyze the Marmousi synthetic data for porosity prediction.
+2026-05-01 11:56:56,491 [INFO] AFC is enabled with max remote calls: 10.
+2026-05-01 11:56:57,740 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-05-01 11:56:57,754 [INFO] No exact match for 'marmousi'. Using LLM to identify relevant files.
+2026-05-01 11:56:57,756 [INFO] AFC is enabled with max remote calls: 10.
+2026-05-01 11:57:00,610 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-05-01 11:57:00,612 [INFO] Verified 4 files: [PosixPath('/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/MODEL_S-WAVE_VELOCITY_1.25m.segy.tar.gz'), PosixPath('/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/MODEL_P-WAVE_VELOCITY_1.25m.segy.tar.gz'), PosixPath('/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/Vs.segy.tar.gz'), PosixPath('/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/Vp.segy.tar.gz')]
+2026-05-01 11:57:00,622 [INFO] Signal Emitted: DATA_READY
+2026-05-01 11:57:00,626 [INFO] Analysis Agent triggered: 'porosity prediction' on 4 file(s).
+2026-05-01 11:57:00,626 [INFO] Pipeline: ['SEGYLoader', 'VelocityAnalysis', 'LLMSummary']
+2026-05-01 11:57:00,626 [INFO] Running tool: SEGYLoader
+2026-05-01 11:57:00,626 [INFO] Loading Vs from MODEL_S-WAVE_VELOCITY_1.25m.segy.tar.gz
+2026-05-01 11:57:01,105 [INFO]   → shape (13601, 2801), range [0, 2802] m/s
+2026-05-01 11:57:01,105 [INFO] Loading Vp from MODEL_P-WAVE_VELOCITY_1.25m.segy.tar.gz
+2026-05-01 11:57:01,538 [INFO]   → shape (13601, 2801), range [1028, 4700] m/s
+2026-05-01 11:57:01,538 [INFO] Skipping Vs.segy.tar.gz (vs already loaded)
+2026-05-01 11:57:01,538 [INFO] Skipping Vp.segy.tar.gz (vp already loaded)
+2026-05-01 11:57:01,570 [INFO]   → OK: Loaded VP, VS models. Grid spacing: 1.25 m. Vp shape: (13601, 2801), range: [1028, 4700] m/s. Vs shape: (13601, 2801), r
+2026-05-01 11:57:01,570 [INFO] Running tool: VelocityAnalysis
+/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/framework/tools/velocity_analysis.py:86: RuntimeWarning: divide by zero encountered in divide
+  ratio = np.where(_vs > 0, _vp / _vs, np.nan)
+/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/framework/tools/velocity_analysis.py:141: RuntimeWarning: divide by zero encountered in divide
+  ratio = np.where(vs[:nz, :nx] > 0, vp[:nz, :nx] / vs[:nz, :nx], np.nan)
+2026-05-01 11:57:14,441 [INFO] Velocity figure saved: /Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/outputs/velocity_model_20260501_115703.png
+2026-05-01 11:57:14,459 [INFO]   → OK: Velocity analysis complete.
+Vp: mean=2672 m/s, range=[1028, 4700]
+Vs: mean=1163 m/s, range=[0, 2802]
+Vp/Vs: mean=2.49 | 
+2026-05-01 11:57:14,459 [INFO] Running tool: LLMSummary
+2026-05-01 11:57:14,460 [INFO] AFC is enabled with max remote calls: 10.
+2026-05-01 11:57:30,632 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-05-01 11:57:30,635 [INFO]   → OK: LLM summary generated.
+2026-05-01 11:57:30,636 [INFO] Pipeline complete.
+[OK] SEGYLoader: Loaded VP, VS models. Grid spacing: 1.25 m. Vp shape: (13601, 2801), range: [1028, 4700] m/s. Vs shape: (13601, 2801), range: [0, 2802] m/s.
+[OK] VelocityAnalysis: Velocity analysis complete.
+Vp: mean=2672 m/s, range=[1028, 4700]
+Vs: mean=1163 m/s, range=[0, 2802]
+Vp/Vs: mean=2.49 | Poisson σ: mean=0.365
+Figure: /Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/outputs/velocity_model_20260501_115703.png
+[OK] LLMSummary: LLM summary generated.
+2026-05-01 11:57:30,648 [INFO] Signal Emitted: ANALYSIS_COMPLETE
+2026-05-01 11:57:30,658 [INFO] Reporting Agent triggered.
+2026-05-01 11:57:30,658 [INFO] Report successfully generated at: /Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/outputs/geophysical_report_20260501_115730.md
+2026-05-01 11:57:30,665 [INFO] Signal Emitted: REPORT_GENERATED
+2026-05-01 11:57:30,672 [INFO] LaTeX Reporter triggered.
+2026-05-01 11:57:32,035 [INFO] PDF report: /Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/outputs/geophysical_report_20260501_115730.pdf
+2026-05-01 11:57:32,039 [INFO] Signal Emitted: LATEX_REPORT_GENERATED
+
+[LaTeX Reporter] PDF saved: /Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/outputs/geophysical_report_20260501_115730.pdf
+
+--- Workflow Lifecycle Summary ---
+Status: LATEX_REPORT_GENERATED
+Markdown Report: /Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/outputs/geophysical_report_20260501_115730.md
