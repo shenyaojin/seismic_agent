@@ -8,6 +8,7 @@ from framework.workspace import Workspace
 from framework.agents.manager import ManagerAgent
 from framework.agents.analysis import AnalysisAgent
 from framework.agents.reporter import ReporterAgent
+from framework.agents.latex_reporter import LaTeXReporterAgent
 
 def load_local_env() -> None:
     env_path = Path(__file__).resolve().parent / ".env"
@@ -46,9 +47,10 @@ def main():
     workspace = Workspace(log_path="mission_log.json")
 
     # 2. Initialize Agents
-    manager = ManagerAgent("Manager", workspace, client)
+    manager  = ManagerAgent("Manager", workspace, client)
     analysis = AnalysisAgent("Analyzer", workspace, client)
     reporter = ReporterAgent("Reporter", workspace, client)
+    latex    = LaTeXReporterAgent("LaTeXReporter", workspace, client)
 
     # 3. Define a sample query
     query = "Analyze the Marmousi synthetic data for porosity prediction."
@@ -61,7 +63,7 @@ def main():
     if workspace.state:
         print(f"Status: {workspace.state.status}")
         if workspace.state.report_path:
-            print(f"Report Generated: {workspace.state.report_path}")
+            print(f"Markdown Report: {workspace.state.report_path}")
     else:
         print("Mission did not start correctly.")
 

@@ -23,19 +23,28 @@ class ReporterAgent(BaseAgent):
     def handle_signal(self, signal: MissionSignal, data: Any = None):
         if signal == MissionSignal.ANALYSIS_COMPLETE:
             self.logger.info("Reporting Agent triggered.")
-            self.generate_report(data.get("insights", "No insights provided."))
+            self.generate_report(
+                data.get("insights", "No insights provided."),
+                figures=data.get("figures", []),
+            )
 
-    def generate_report(self, insights: str):
+    def generate_report(self, insights: str, figures: list = None):
         """
         Formats and saves a technical Markdown report.
         """
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         report_filename = f"geophysical_report_{timestamp}.md"
         report_path = self.output_dir / report_filename
-        
+
         state = self.workspace.state
         mission_id = state.mission_id if state else "N/A"
-        
+
+        figures_section = ""
+        if figures:
+            figures_section = "\n## Generated Figures\n"
+            for fig in figures:
+                figures_section += f"- `{fig}`\n"
+
         report_content = f"""# Geophysical Analysis Report
 **Mission ID:** {mission_id}
 **Date:** {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
@@ -45,7 +54,7 @@ class ReporterAgent(BaseAgent):
 
 ## Data Sources
 {", ".join(state.data_paths) if state and state.data_paths else "None"}
-
+{figures_section}
 ## Analysis Insights
 {insights}
 

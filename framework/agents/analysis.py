@@ -1,13 +1,24 @@
+from pathlib import Path
 from typing import Any
 from google import genai
+
 from framework.workspace import Workspace, MissionSignal
 from framework.agents.base import BaseAgent
+from framework.tools import ToolChain, ToolContext, resolve_pipeline
 
 
 class AnalysisAgent(BaseAgent):
     """
-    Analysis Agent: Triggered by DATA_READY, executes ML models and summarizes findings.
+    Analysis Agent: Triggered by DATA_READY.
+
+    Resolves the appropriate ToolChain for the requested analysis_type,
+    runs the pipeline, and emits ANALYSIS_COMPLETE with the LLM summary.
     """
+
+    def __init__(self, name: str, workspace: Workspace, client: genai.Client,
+                 outputs_dir: str = "outputs/"):
+        self.outputs_dir = Path(outputs_dir).resolve()
+        super().__init__(name, workspace, client)
 
     def _setup_subscriptions(self):
         self.workspace.subscribe(MissionSignal.DATA_READY, self.handle_signal)
@@ -16,44 +27,46 @@ class AnalysisAgent(BaseAgent):
         if signal == MissionSignal.DATA_READY:
             files = data.get("files", [])
             analysis_type = data.get("analysis", "general")
-            self.logger.info(f"Analysis Agent triggered for: {analysis_type} on {len(files)} files.")
+            self.logger.info(f"Analysis Agent triggered: '{analysis_type}' on {len(files)} file(s).")
             self.run_analysis(files, analysis_type)
 
     def run_analysis(self, files: list, analysis_type: str):
-        """
-        Simulates ML processing and generates text-based insights.
-        """
-        file_names = [f.name for f in files]
-        
-        prompt = f"""
-        You are an expert Geophysicist. 
-        Perform a simulated {analysis_type} analysis on the following seismic data files:
-        {file_names}
-        
-        Since this is a simulation, provide:
-        1. A summary of the likely data content (based on file names).
-        2. A set of simulated numerical findings (e.g., average porosity: 18%, high-velocity zones detected).
-        3. A technical interpretation of these findings.
-        
-        Keep the tone professional and academic.
-        """
-        
-        response = self.client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
+        # Build shared context
+        ctx = ToolContext(
+            files=[Path(f) if not isinstance(f, Path) else f for f in files],
+            analysis_type=analysis_type,
+            outputs_dir=self.outputs_dir,
         )
-        
-        insights = response.text
-        self.logger.info("Analysis complete.")
-        
-        # Update workspace state with results
+
+        # Select and run the pipeline
+        chain: ToolChain = resolve_pipeline(analysis_type, self.client)
+        self.logger.info(f"Pipeline: {[t.name for t in chain.tools]}")
+
+        tool_results = chain.execute(ctx)
+
+        # Collect summary from all tools
+        run_log = "\n".join(
+            f"[{'OK' if r.success else 'FAIL'}] {r.tool_name}: {r.summary}"
+            for r in tool_results
+        )
+        self.logger.info(f"Pipeline complete.\n{run_log}")
+
+        # Primary insight: LLM summary if available, else concatenate tool summaries
+        insights = ctx.metrics.get("llm_summary") or run_log
+
         self.workspace.update_state(
             analysis_results={
                 "type": analysis_type,
                 "insights": insights,
-                "files_processed": [str(f) for f in files]
+                "files_processed": [str(f) for f in ctx.files],
+                "figures": ctx.figures,
+                "metrics": ctx.metrics,
+                "tool_log": run_log,
             },
-            status="ANALYSIS_COMPLETED"
+            status="ANALYSIS_COMPLETED",
         )
-        
-        self.workspace.emit(MissionSignal.ANALYSIS_COMPLETE, data={"insights": insights})
+
+        self.workspace.emit(
+            MissionSignal.ANALYSIS_COMPLETE,
+            data={"insights": insights, "figures": ctx.figures},
+        )
