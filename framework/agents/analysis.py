@@ -5,6 +5,7 @@ from google import genai
 from framework.workspace import Workspace, MissionSignal
 from framework.agents.base import BaseAgent
 from framework.tools import ToolChain, ToolContext, resolve_pipeline
+from framework.tool_call_logger import ToolCallLogger
 
 
 class AnalysisAgent(BaseAgent):
@@ -18,6 +19,7 @@ class AnalysisAgent(BaseAgent):
     def __init__(self, name: str, workspace: Workspace, client: genai.Client,
                  outputs_dir: str = "outputs/"):
         self.outputs_dir = Path(outputs_dir).resolve()
+        self.tool_logger = ToolCallLogger()
         super().__init__(name, workspace, client)
 
     def _setup_subscriptions(self):
@@ -42,7 +44,9 @@ class AnalysisAgent(BaseAgent):
         chain: ToolChain = resolve_pipeline(analysis_type, self.client)
         self.logger.info(f"Pipeline: {[t.name for t in chain.tools]}")
 
-        tool_results = chain.execute(ctx)
+        mission_id = self.workspace.state.mission_id if self.workspace.state else "unknown"
+        on_start, on_done = self.tool_logger.make_callbacks(mission_id, ctx.metrics)
+        tool_results = chain.execute(ctx, on_tool_start=on_start, on_tool_done=on_done)
 
         # Collect summary from all tools
         run_log = "\n".join(

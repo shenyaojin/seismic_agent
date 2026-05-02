@@ -1,0 +1,72 @@
+[
+  {
+    "id": "tc_001",
+    "category": "happy_path",
+    "query": "Analyze the Marmousi synthetic data for porosity prediction.",
+    "expected_outcome": "success",
+    "notes": "Standard happy-path: Marmousi data exists, velocity analysis pipeline.",
+    "passed": true,
+    "status": "DRY_RUN",
+    "error_category": "none",
+    "error_message": null,
+    "duration_ms": 0.0,
+    "cost_summary": {},
+    "confidence_score": null
+  },
+  {
+    "id": "tc_002",
+    "category": "happy_path",
+    "query": "Run velocity analysis on the Marmousi seismic model.",
+    "expected_outcome": "success",
+    "notes": "Explicit 'velocity analysis' keyword should resolve to velocity pipeline.",
+    "passed": true,
+    "status": "DRY_RUN",
+    "error_category": "none",
+    "error_message": null,
+    "duration_ms": 0.0,
+    "cost_summary": {},
+    "confidence_score": null
+  },
+  {
+    "id": "tc_003",
+    "category": "happy_path",
+    "query": "Perform structural interpretation of Marmousi seismic data.",
+    "expected_outcome": "success",
+    "notes": "Structural interpretation maps to velocity_analysis pipeline.",
+    "passed": true,
+    "status": "DRY_RUN",
+    "error_category": "none",
+    "error_message": null,
+    "duration_ms": 0.0,
+    "cost_summary": {},
+    "confidence_score": null
+  },
+  {
+    "id": "tc_004",
+    "category": "happy_path",
+    "query": "What are the rock physics properties of the Marmousi dataset?",
+    "expected_outcome": "success",
+    "notes": "Question-form query; manager should still parse dataset_keyword=Marmousi.",
+    "passed": true,
+    "status": "DRY_RUN",
+    "error_category": "none",
+    "error_message": null,
+    "duration_ms": 0.0,
+    "cost_summary": {},
+    "confidence_score": null
+  },
+  {
+    "id": "tc_005",
+    "category": "happy_path",
+    "query": "Classify the lithology of Marmousi using seismic attributes.",
+    "expected_outcome": "success",
+    "notes": "Lithology classification keyword triggers velocity pipeline.",
+    "passed": true,
+    "status": "DRY_RUN",
+    "error_category": "none",
+    "error_message": null,
+    "duration_ms": 0.0,
+    "cost_summary": {},
+    "confidence_score": null
+  }
+]

@@ -9,6 +9,8 @@ from framework.agents.manager import ManagerAgent
 from framework.agents.analysis import AnalysisAgent
 from framework.agents.reporter import ReporterAgent
 from framework.agents.latex_reporter import LaTeXReporterAgent
+from framework.agents.verifier import VerifierAgent
+from framework.guardrails import SeismicGuardrails
 
 def load_local_env() -> None:
     env_path = Path(__file__).resolve().parent / ".env"
@@ -49,6 +51,7 @@ def main():
     # 2. Initialize Agents
     manager  = ManagerAgent("Manager", workspace, client)
     analysis = AnalysisAgent("Analyzer", workspace, client)
+    verifier = VerifierAgent("Verifier", workspace, client, guardrails=SeismicGuardrails())
     reporter = ReporterAgent("Reporter", workspace, client)
     latex    = LaTeXReporterAgent("LaTeXReporter", workspace, client)
 

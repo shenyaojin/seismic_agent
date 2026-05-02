@@ -1,0 +1,177 @@
+[
+  {
+    "id": "tc_001",
+    "category": "happy_path",
+    "query": "Analyze the Marmousi synthetic data for porosity prediction.",
+    "expected_outcome": "success",
+    "notes": "Standard happy-path: Marmousi data exists, velocity analysis pipeline."
+  },
+  {
+    "id": "tc_002",
+    "category": "happy_path",
+    "query": "Run velocity analysis on the Marmousi seismic model.",
+    "expected_outcome": "success",
+    "notes": "Explicit 'velocity analysis' keyword should resolve to velocity pipeline."
+  },
+  {
+    "id": "tc_003",
+    "category": "happy_path",
+    "query": "Perform structural interpretation of Marmousi seismic data.",
+    "expected_outcome": "success",
+    "notes": "Structural interpretation maps to velocity_analysis pipeline."
+  },
+  {
+    "id": "tc_004",
+    "category": "happy_path",
+    "query": "What are the rock physics properties of the Marmousi dataset?",
+    "expected_outcome": "success",
+    "notes": "Question-form query; manager should still parse dataset_keyword=Marmousi."
+  },
+  {
+    "id": "tc_005",
+    "category": "happy_path",
+    "query": "Classify the lithology of Marmousi using seismic attributes.",
+    "expected_outcome": "success",
+    "notes": "Lithology classification keyword triggers velocity pipeline."
+  },
+  {
+    "id": "tc_006",
+    "category": "analysis_type_variation",
+    "query": "Perform forward modeling on the Marmousi velocity model.",
+    "expected_outcome": "success",
+    "notes": "Should select the forward_modeling pipeline (SEGYLoader+VelAna+ForwardModeling+LLM)."
+  },
+  {
+    "id": "tc_007",
+    "category": "analysis_type_variation",
+    "query": "Compute synthetic seismic gathers from the Marmousi model.",
+    "expected_outcome": "success",
+    "notes": "Synonym for forward modeling."
+  },
+  {
+    "id": "tc_008",
+    "category": "analysis_type_variation",
+    "query": "What is the Vp/Vs ratio distribution in the Marmousi model?",
+    "expected_outcome": "success",
+    "notes": "Focuses on velocity ratio; velocity pipeline returns Vp/Vs metrics."
+  },
+  {
+    "id": "tc_009",
+    "category": "analysis_type_variation",
+    "query": "Estimate Poisson ratio for Marmousi to assess fluid content.",
+    "expected_outcome": "success",
+    "notes": "Poisson ratio request → velocity analysis, tests guardrail range check."
+  },
+  {
+    "id": "tc_010",
+    "category": "analysis_type_variation",
+    "query": "Run full waveform inversion on the Marmousi synthetic dataset.",
+    "expected_outcome": "success",
+    "notes": "FWI pipeline; most expensive test case (~3-5 min). Expects convergence metrics."
+  },
+  {
+    "id": "tc_011",
+    "category": "wrong_dataset",
+    "query": "Analyze the Sleipner CO2 injection seismic dataset.",
+    "expected_outcome": "awaiting_clarification",
+    "notes": "Sleipner files not present; manager should fall back to LLM matching, then clarification."
+  },
+  {
+    "id": "tc_012",
+    "category": "wrong_dataset",
+    "query": "Process the Gullfaks well logs for formation evaluation.",
+    "expected_outcome": "awaiting_clarification",
+    "notes": "Gullfaks dataset not in data_seismic/."
+  },
+  {
+    "id": "tc_013",
+    "category": "wrong_dataset",
+    "query": "Run FWI on the SEG/EAGE salt model dataset.",
+    "expected_outcome": "awaiting_clarification",
+    "notes": "SEG salt model files not present."
+  },
+  {
+    "id": "tc_014",
+    "category": "wrong_dataset",
+    "query": "Interpret the BP Azimuth broadband seismic survey.",
+    "expected_outcome": "awaiting_clarification",
+    "notes": "BP Azimuth data not present."
+  },
+  {
+    "id": "tc_015",
+    "category": "wrong_dataset",
+    "query": "Analyze the SEAM Phase 1 dataset for subsalt imaging.",
+    "expected_outcome": "awaiting_clarification",
+    "notes": "SEAM dataset not present; tests LLM file-matching fallback."
+  },
+  {
+    "id": "tc_016",
+    "category": "malformed_query",
+    "query": "",
+    "expected_outcome": "no_crash",
+    "notes": "Empty query string; should not raise an unhandled exception."
+  },
+  {
+    "id": "tc_017",
+    "category": "malformed_query",
+    "query": "1234567890",
+    "expected_outcome": "no_crash",
+    "notes": "Numeric-only query; manager LLM call should still return a parseable JSON."
+  },
+  {
+    "id": "tc_018",
+    "category": "malformed_query",
+    "query": "!@#$%^&*() seismic ??? data ---",
+    "expected_outcome": "no_crash",
+    "notes": "Special characters; should not break JSON parsing or LLM call."
+  },
+  {
+    "id": "tc_019",
+    "category": "malformed_query",
+    "query": "Analyser les données sismiques de Marmousi pour la prédiction de porosité.",
+    "expected_outcome": "no_crash",
+    "notes": "French-language query; Gemini should still parse it correctly."
+  },
+  {
+    "id": "tc_020",
+    "category": "malformed_query",
+    "query": "SELECT * FROM seismic_data WHERE dataset='Marmousi' AND analysis_type='velocity';",
+    "expected_outcome": "no_crash",
+    "notes": "SQL-injection-style input; should be treated as plain text by the LLM."
+  },
+  {
+    "id": "tc_021",
+    "category": "partial_query",
+    "query": "Marmousi",
+    "expected_outcome": "success",
+    "notes": "Minimal keyword-only query; manager should find Marmousi files and run general pipeline."
+  },
+  {
+    "id": "tc_022",
+    "category": "partial_query",
+    "query": "Analyze seismic data.",
+    "expected_outcome": "no_crash",
+    "notes": "No dataset keyword; LLM may pick a general keyword; outcome depends on file matching."
+  },
+  {
+    "id": "tc_023",
+    "category": "partial_query",
+    "query": "What is the velocity?",
+    "expected_outcome": "no_crash",
+    "notes": "Very generic; no dataset context; tests graceful handling."
+  },
+  {
+    "id": "tc_024",
+    "category": "partial_query",
+    "query": "Perform FWI on the available seismic dataset.",
+    "expected_outcome": "success",
+    "notes": "No specific dataset name; LLM should match Marmousi from available files."
+  },
+  {
+    "id": "tc_025",
+    "category": "partial_query",
+    "query": "Analyze all available datasets.",
+    "expected_outcome": "no_crash",
+    "notes": "Broad request; tests system behaviour when keyword is ambiguous."
+  }
+]

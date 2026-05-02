@@ -1,0 +1,202 @@
+[
+  {
+    "id": "tc_011",
+    "category": "wrong_dataset",
+    "query": "Analyze the Sleipner CO2 injection seismic dataset.",
+    "expected_outcome": "awaiting_clarification",
+    "notes": "Sleipner files not present; manager should fall back to LLM matching, then clarification.",
+    "passed": false,
+    "status": null,
+    "error_category": "exception",
+    "error_message": "Models.generate_content() missing 1 required keyword-only argument: 'model'",
+    "duration_ms": 0.3,
+    "cost_summary": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0,
+      "call_count": 0,
+      "estimated_usd": 0.0
+    },
+    "confidence_score": null
+  },
+  {
+    "id": "tc_012",
+    "category": "wrong_dataset",
+    "query": "Process the Gullfaks well logs for formation evaluation.",
+    "expected_outcome": "awaiting_clarification",
+    "notes": "Gullfaks dataset not in data_seismic/.",
+    "passed": false,
+    "status": null,
+    "error_category": "exception",
+    "error_message": "Models.generate_content() missing 1 required keyword-only argument: 'model'",
+    "duration_ms": 0.2,
+    "cost_summary": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0,
+      "call_count": 0,
+      "estimated_usd": 0.0
+    },
+    "confidence_score": null
+  },
+  {
+    "id": "tc_013",
+    "category": "wrong_dataset",
+    "query": "Run FWI on the SEG/EAGE salt model dataset.",
+    "expected_outcome": "awaiting_clarification",
+    "notes": "SEG salt model files not present.",
+    "passed": false,
+    "status": null,
+    "error_category": "exception",
+    "error_message": "Models.generate_content() missing 1 required keyword-only argument: 'model'",
+    "duration_ms": 0.2,
+    "cost_summary": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0,
+      "call_count": 0,
+      "estimated_usd": 0.0
+    },
+    "confidence_score": null
+  },
+  {
+    "id": "tc_014",
+    "category": "wrong_dataset",
+    "query": "Interpret the BP Azimuth broadband seismic survey.",
+    "expected_outcome": "awaiting_clarification",
+    "notes": "BP Azimuth data not present.",
+    "passed": false,
+    "status": null,
+    "error_category": "exception",
+    "error_message": "Models.generate_content() missing 1 required keyword-only argument: 'model'",
+    "duration_ms": 0.2,
+    "cost_summary": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0,
+      "call_count": 0,
+      "estimated_usd": 0.0
+    },
+    "confidence_score": null
+  },
+  {
+    "id": "tc_015",
+    "category": "wrong_dataset",
+    "query": "Analyze the SEAM Phase 1 dataset for subsalt imaging.",
+    "expected_outcome": "awaiting_clarification",
+    "notes": "SEAM dataset not present; tests LLM file-matching fallback.",
+    "passed": false,
+    "status": null,
+    "error_category": "exception",
+    "error_message": "Models.generate_content() missing 1 required keyword-only argument: 'model'",
+    "duration_ms": 0.2,
+    "cost_summary": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0,
+      "call_count": 0,
+      "estimated_usd": 0.0
+    },
+    "confidence_score": null
+  },
+  {
+    "id": "tc_016",
+    "category": "malformed_query",
+    "query": "",
+    "expected_outcome": "no_crash",
+    "notes": "Empty query string; should not raise an unhandled exception.",
+    "passed": false,
+    "status": null,
+    "error_category": "exception",
+    "error_message": "Models.generate_content() missing 1 required keyword-only argument: 'model'",
+    "duration_ms": 0.5,
+    "cost_summary": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0,
+      "call_count": 0,
+      "estimated_usd": 0.0
+    },
+    "confidence_score": null
+  },
+  {
+    "id": "tc_017",
+    "category": "malformed_query",
+    "query": "1234567890",
+    "expected_outcome": "no_crash",
+    "notes": "Numeric-only query; manager LLM call should still return a parseable JSON.",
+    "passed": false,
+    "status": null,
+    "error_category": "exception",
+    "error_message": "Models.generate_content() missing 1 required keyword-only argument: 'model'",
+    "duration_ms": 0.9,
+    "cost_summary": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0,
+      "call_count": 0,
+      "estimated_usd": 0.0
+    },
+    "confidence_score": null
+  },
+  {
+    "id": "tc_018",
+    "category": "malformed_query",
+    "query": "!@#$%^&*() seismic ??? data ---",
+    "expected_outcome": "no_crash",
+    "notes": "Special characters; should not break JSON parsing or LLM call.",
+    "passed": false,
+    "status": null,
+    "error_category": "exception",
+    "error_message": "Models.generate_content() missing 1 required keyword-only argument: 'model'",
+    "duration_ms": 0.2,
+    "cost_summary": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0,
+      "call_count": 0,
+      "estimated_usd": 0.0
+    },
+    "confidence_score": null
+  },
+  {
+    "id": "tc_019",
+    "category": "malformed_query",
+    "query": "Analyser les donn\u00e9es sismiques de Marmousi pour la pr\u00e9diction de porosit\u00e9.",
+    "expected_outcome": "no_crash",
+    "notes": "French-language query; Gemini should still parse it correctly.",
+    "passed": false,
+    "status": null,
+    "error_category": "exception",
+    "error_message": "Models.generate_content() missing 1 required keyword-only argument: 'model'",
+    "duration_ms": 0.2,
+    "cost_summary": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0,
+      "call_count": 0,
+      "estimated_usd": 0.0
+    },
+    "confidence_score": null
+  },
+  {
+    "id": "tc_020",
+    "category": "malformed_query",
+    "query": "SELECT * FROM seismic_data WHERE dataset='Marmousi' AND analysis_type='velocity';",
+    "expected_outcome": "no_crash",
+    "notes": "SQL-injection-style input; should be treated as plain text by the LLM.",
+    "passed": false,
+    "status": null,
+    "error_category": "exception",
+    "error_message": "Models.generate_content() missing 1 required keyword-only argument: 'model'",
+    "duration_ms": 0.1,
+    "cost_summary": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0,
+      "call_count": 0,
+      "estimated_usd": 0.0
+    },
+    "confidence_score": null
+  }
+]

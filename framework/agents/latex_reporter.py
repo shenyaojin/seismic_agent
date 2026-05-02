@@ -225,10 +225,10 @@ class LaTeXReporterAgent(BaseAgent):
         super().__init__(name, workspace, client)
 
     def _setup_subscriptions(self):
-        self.workspace.subscribe(MissionSignal.ANALYSIS_COMPLETE, self.handle_signal)
+        self.workspace.subscribe(MissionSignal.VERIFICATION_COMPLETE, self.handle_signal)
 
     def handle_signal(self, signal: MissionSignal, data: Any = None):
-        if signal == MissionSignal.ANALYSIS_COMPLETE:
+        if signal == MissionSignal.VERIFICATION_COMPLETE:
             self.logger.info("LaTeX Reporter triggered.")
             self.generate_report(
                 insights=data.get("insights", ""),
