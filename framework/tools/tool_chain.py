@@ -14,7 +14,7 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-from typing import Callable, Dict, List
+from typing import Callable, Dict, List, Optional
 
 from google import genai
 
@@ -41,10 +41,23 @@ class ToolChain:
         self.tools = tools
         self.stop_on_failure = stop_on_failure
 
-    def execute(self, ctx: ToolContext) -> List[ToolResult]:
+    def execute(
+        self,
+        ctx: ToolContext,
+        on_tool_start: Optional[Callable[[str], None]] = None,
+        on_tool_done: Optional[Callable[[ToolResult], None]] = None,
+    ) -> List[ToolResult]:
+        """Run all tools sequentially.
+
+        Args:
+            on_tool_start: called with the tool name before each tool runs.
+            on_tool_done:  called with the ToolResult after each tool finishes.
+        """
         results: List[ToolResult] = []
         for tool in self.tools:
             logger.info(f"Running tool: {tool.name}")
+            if on_tool_start:
+                on_tool_start(tool.name)
             try:
                 result = tool.run(ctx)
             except Exception as exc:
@@ -53,6 +66,8 @@ class ToolChain:
 
             results.append(result)
             logger.info(f"  → {'OK' if result.success else 'FAIL'}: {result.summary[:120]}")
+            if on_tool_done:
+                on_tool_done(result)
 
             if not result.success and self.stop_on_failure:
                 logger.warning("Stopping pipeline on failure.")

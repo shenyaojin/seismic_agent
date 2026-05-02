@@ -2867,5 +2867,115 @@
             "report_path": "/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/outputs/geophysical_report_20260501_115730.md",
             "status": "LATEX_REPORT_GENERATED"
         }
+    },
+    {
+        "event": "STATE_INITIALIZED",
+        "state": {
+            "mission_id": "mission_bbd3041c",
+            "description": "Analyze the Marmousi synthetic data for porosity prediction.",
+            "plan": {
+                "dataset_keyword": "Marmousi",
+                "analysis_type": "porosity prediction"
+            },
+            "data_paths": [],
+            "analysis_results": {},
+            "report_path": null,
+            "status": "PARSED"
+        }
+    },
+    {
+        "event": "STATE_UPDATED: ['data_paths', 'status']",
+        "state": {
+            "mission_id": "mission_bbd3041c",
+            "description": "Analyze the Marmousi synthetic data for porosity prediction.",
+            "plan": {
+                "dataset_keyword": "Marmousi",
+                "analysis_type": "porosity prediction"
+            },
+            "data_paths": [
+                "/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/MODEL_S-WAVE_VELOCITY_1.25m.segy.tar.gz",
+                "/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/MODEL_P-WAVE_VELOCITY_1.25m.segy.tar.gz",
+                "/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/Vs.segy.tar.gz",
+                "/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/Vp.segy.tar.gz"
+            ],
+            "analysis_results": {},
+            "report_path": null,
+            "status": "DATA_VERIFIED"
+        }
+    },
+    {
+        "event": "SIGNAL_EMITTED: DATA_READY",
+        "state": {
+            "mission_id": "mission_bbd3041c",
+            "description": "Analyze the Marmousi synthetic data for porosity prediction.",
+            "plan": {
+                "dataset_keyword": "Marmousi",
+                "analysis_type": "porosity prediction"
+            },
+            "data_paths": [
+                "/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/MODEL_S-WAVE_VELOCITY_1.25m.segy.tar.gz",
+                "/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/MODEL_P-WAVE_VELOCITY_1.25m.segy.tar.gz",
+                "/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/Vs.segy.tar.gz",
+                "/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/Vp.segy.tar.gz"
+            ],
+            "analysis_results": {},
+            "report_path": null,
+            "status": "DATA_VERIFIED"
+        }
+    },
+    {
+        "event": "STATE_INITIALIZED",
+        "state": {
+            "mission_id": "mission_1963dc73",
+            "description": "Analyze the Marmousi synthetic data for porosity prediction.",
+            "plan": {
+                "dataset_keyword": "Marmousi",
+                "analysis_type": "porosity prediction"
+            },
+            "data_paths": [],
+            "analysis_results": {},
+            "report_path": null,
+            "status": "PARSED"
+        }
+    },
+    {
+        "event": "STATE_UPDATED: ['data_paths', 'status']",
+        "state": {
+            "mission_id": "mission_1963dc73",
+            "description": "Analyze the Marmousi synthetic data for porosity prediction.",
+            "plan": {
+                "dataset_keyword": "Marmousi",
+                "analysis_type": "porosity prediction"
+            },
+            "data_paths": [
+                "/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/MODEL_S-WAVE_VELOCITY_1.25m.segy.tar.gz",
+                "/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/MODEL_P-WAVE_VELOCITY_1.25m.segy.tar.gz",
+                "/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/Vs.segy.tar.gz",
+                "/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/Vp.segy.tar.gz"
+            ],
+            "analysis_results": {},
+            "report_path": null,
+            "status": "DATA_VERIFIED"
+        }
+    },
+    {
+        "event": "SIGNAL_EMITTED: DATA_READY",
+        "state": {
+            "mission_id": "mission_1963dc73",
+            "description": "Analyze the Marmousi synthetic data for porosity prediction.",
+            "plan": {
+                "dataset_keyword": "Marmousi",
+                "analysis_type": "porosity prediction"
+            },
+            "data_paths": [
+                "/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/MODEL_S-WAVE_VELOCITY_1.25m.segy.tar.gz",
+                "/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/MODEL_P-WAVE_VELOCITY_1.25m.segy.tar.gz",
+                "/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/Vs.segy.tar.gz",
+                "/Users/shenyaojin/Documents/2026/CSCI576/seismic_agent/data_seismic/Vp.segy.tar.gz"
+            ],
+            "analysis_results": {},
+            "report_path": null,
+            "status": "DATA_VERIFIED"
+        }
     }
 ]
